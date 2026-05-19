@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consulta CNPJ Pro</title>
+    <!-- Tailwind CSS para o visual moderno e responsivo -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React e ReactDOM via CDN -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <!-- Babel para fazer o navegador entender o JSX do React -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body class="bg-slate-50 text-slate-800">
 
+    <!-- Ponto de inserção do React -->
     <div id="root"></div>
 
+    <!-- Script do React (tipo text/babel é obrigatório) -->
     <script type="text/babel">
         const { useState, useMemo } = React;
 
@@ -296,9 +301,14 @@
                           <div className="mt-4 pt-4 border-t border-slate-100">
                             <span className="font-semibold block mb-2">Inscrições Estaduais:</span>
                             {data.estabelecimento?.inscricoes_estaduais?.length > 0 ? (
-                              <div className="flex flex-wrap gap-2">
+                              <div className="flex flex-col gap-2.5">
                                 {data.estabelecimento.inscricoes_estaduais.map((ie, idx) => (
-                                  <span key={idx} className="bg-slate-100 text-slate-700 px-2 py-1 rounded text-xs border border-slate-200">{ie.estado.sigla}: <strong className="font-mono">{ie.inscricao_estadual}</strong></span>
+                                  <div key={idx} className="flex items-center justify-between bg-slate-100 text-slate-700 px-3 py-2 rounded text-xs border border-slate-200">
+                                    <span>{ie.estado.sigla}: <strong className="font-mono">{ie.inscricao_estadual}</strong></span>
+                                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${ie.ativo ? 'bg-green-200 text-green-800 border border-green-300' : 'bg-red-100 text-red-700 border border-red-200'}`}>
+                                      {ie.ativo ? 'Ativa' : 'Inativa'}
+                                    </span>
+                                  </div>
                                 ))}
                               </div>
                             ) : <span className="text-slate-400 italic text-sm">Nenhuma IE localizada.</span>}
